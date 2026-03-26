@@ -1,0 +1,79 @@
+# Lark {Domain} API Examples
+
+> All examples assume the client is initialized per [SKILL.md](../SKILL.md).
+> See [api-reference.md](./api-reference.md) for param details.
+> See [api-validation.md](./api-validation.md) for enums and error codes.
+
+---
+
+## 1. {List/Fetch Operation}
+
+```python
+# {Brief description — e.g. "List all active tasks in a tasklist"}
+{result} = client.{list_method}({required_params})
+
+for item in {result}:
+    print(f"- {item.get('{name_field}', '(unnamed)')} [{item.get('{status_field}', '')}]")
+```
+
+---
+
+## 2. {Create Operation}
+
+```python
+# {Brief description — e.g. "Create a task with due date and assignee"}
+{resource} = client.{create_method}({
+    "{required_field_1}": "{example_value}",
+    "{required_field_2}": "{example_value}",
+    "{optional_field}": "{example_value}"   # optional
+})
+{resource_id} = {resource}["{id_field}"]
+print(f"Created: {resource_id}")
+```
+
+---
+
+## 3. {Update Operation}
+
+```python
+# {Brief description — e.g. "Update title and mark as high priority"}
+updated = client.{update_method}({resource_id}, {
+    "{field_to_update}": "{new_value}",
+    "{another_field}": "{new_value}"
+})
+```
+
+---
+
+## 4. {Delete/Complete Operation}
+
+```python
+# {Brief description — e.g. "Complete a task and verify it's done"}
+success = client.{delete_or_complete_method}({resource_id})
+if success:
+    print("{Resource} removed")
+
+# Verify
+items = client.{list_method}({params})
+assert not any(i["{id_field}"] == {resource_id} for i in items)
+```
+
+---
+
+## 5. {Complex/Multi-step Operation}
+
+```python
+# {Brief description — e.g. "Create resource with nested config and link to parent"}
+
+# Step 1: {description}
+{parent} = client.{parent_method}({parent_params})
+
+# Step 2: {description}
+{child} = client.{child_method}({parent}["{id_field}"], {
+    "{field}": "{value}"
+})
+
+# Step 3: {description}
+client.{link_method}({parent}["{id_field}"], {child}["{id_field}"])
+print(f"Done: {child}['{id_field}']")
+```

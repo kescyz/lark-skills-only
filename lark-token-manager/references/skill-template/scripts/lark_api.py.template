@@ -1,0 +1,46 @@
+"""
+Lark {Domain} API client.
+Extends LarkAPIBase with {domain}-specific methods.
+"""
+
+from lark_api_base import LarkAPIBase
+from typing import Dict, Any, List, Optional
+
+
+class Lark{Domain}Client(LarkAPIBase):
+    """{Domain} operations via Lark API."""
+
+    # --- {Resource 1} ---
+
+    def list_{resources}(self, **kwargs) -> List[Dict[str, Any]]:
+        """List {resources}. Returns List[Dict]."""
+        params = {}
+        # Add filters from kwargs
+        return self._fetch_all("/{service}/{version}/{resources}", params=params)
+
+    def create_{resource}(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        """Create {resource}. Returns Dict with guid/id."""
+        return self._call_api("POST", "/{service}/{version}/{resources}", data=data)
+
+    def get_{resource}(self, resource_id: str) -> Dict[str, Any]:
+        """Get {resource} by ID."""
+        return self._call_api("GET", f"/{service}/{version}/{resources}/{resource_id}")
+
+    def update_{resource}(self, resource_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
+        """Update {resource}. Uses update_fields pattern for PATCH APIs.
+        NOTE: Some APIs (e.g., Calendar) use plain PATCH without update_fields.
+        Check your domain's API docs and adjust accordingly.
+        """
+        # Task-style PATCH (with update_fields):
+        update_data = {
+            "{resource}": data,
+            "update_fields": list(data.keys())
+        }
+        # Calendar-style PATCH (plain body): update_data = data
+        return self._call_api("PATCH", f"/{service}/{version}/{resources}/{resource_id}", data=update_data)
+
+    def delete_{resource}(self, resource_id: str) -> Dict[str, Any]:
+        """Delete {resource}."""
+        return self._call_api("DELETE", f"/{service}/{version}/{resources}/{resource_id}")
+
+    # --- {Resource 2} (add more resource groups as needed) ---

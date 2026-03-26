@@ -1,0 +1,16 @@
+[
+  {"input": "Create a new spreadsheet called Budget 2026", "expected_method": "create_spreadsheet"},
+  {"input": "Read data from cells A1 to D10 in my spreadsheet", "expected_method": "read_range"},
+  {"input": "Write these values to the sheet", "expected_method": "write_range"},
+  {"input": "Add a new sheet called Summary", "expected_method": "operate_sheets"},
+  {"input": "Find all cells containing 'Total'", "expected_method": "find_cells"},
+  {"input": "Merge the header row A1 to F1", "expected_method": "merge_cells"},
+  {"input": "Insert 5 new rows after row 10", "expected_method": "insert_dimension"},
+  {"input": "Append these sales figures to the bottom of the table", "expected_method": "append_data"},
+  {"input": "Get all sheets in this spreadsheet", "expected_method": "query_sheets"},
+  {"input": "Read cells A1:C5 and D1:F5 at the same time", "expected_method": "batch_read_ranges"},
+  {"input": "Delete columns 3 through 5", "expected_method": "delete_dimension"},
+  {"input": "Unmerge the cells in row 1", "expected_method": "unmerge_cells"},
+  {"input": "Rename the spreadsheet to Q1 Report", "expected_method": "update_spreadsheet_properties"},
+  {"input": "Show me info about this spreadsheet including all its sheets", "expected_method": "get_metadata"}
+]

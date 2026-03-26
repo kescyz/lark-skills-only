@@ -1,0 +1,10 @@
+{
+  "name": "lark-{domain}",
+  "description": "LarkSuite {domain} management - {brief description}",
+  "version": "1.0.0",
+  "requires": ["lark-token-manager"],
+  "skills": ["./skills/lark-{domain}"],
+  "agents": ["./agents/lark-{domain}-agent.md"],
+  "author": "{author}",
+  "license": "proprietary"
+}

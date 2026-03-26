@@ -1,0 +1,96 @@
+# Lark {Domain} Validation Reference
+
+> See [api-reference.md](./api-reference.md) for method signatures.
+> See [api-examples.md](./api-examples.md) for code samples.
+
+---
+
+## Field Constraints
+
+- **{field_name}**: {type}, {constraints — e.g. "1-1000 chars", "must be positive int", "ISO 8601 format"}
+- **{field_name}**: {type}, {constraints}
+- **{field_name}**: {type}, {constraints — note mutually exclusive fields if applicable}
+
+---
+
+## Nested Schemas
+
+### {schema_name}
+
+```python
+# {Usage context — e.g. "Used in create_task() due field"}
+{
+    "{field_1}": "{example}",   # {type}, {constraints}
+    "{field_2}": "{example}"    # {type}, optional
+}
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| {field_1} | {type} | **Yes** | {description} |
+| {field_2} | {type} | No | {description} |
+
+---
+
+### {schema_name_2}
+
+```python
+# {Usage context}
+{
+    "{field}": "{example}"
+}
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| {field} | {type} | No | {description} |
+
+---
+
+## Enum Values
+
+### {field_name} Enum
+
+| Value | Description |
+|-------|-------------|
+| `{value_1}` | {description} |
+| `{value_2}` | {description} |
+| `{value_3}` | {description} |
+
+**Note**: {any important notes about defaults, restrictions, or combinations}
+
+---
+
+### {field_name_2} Enum
+
+| Value | Description |
+|-------|-------------|
+| `{value_1}` | {description} |
+| `{value_2}` | {description} |
+
+---
+
+## Rate Limits
+
+| Operation | Limit |
+|-----------|-------|
+| {operation group} | {N}/min, {N}/sec |
+| {operation group} | {N}/min |
+
+**Retry strategy**: Exponential backoff — 2s, 4s, 8s. Built into `LarkAPIBase`.
+
+---
+
+## Error Code Reference
+
+| Code | HTTP | Message | Fix |
+|------|------|---------|-----|
+| 190002 | 400 | invalid parameters in request | Check field names, types, required fields |
+| 190003 | 500 | internal service error | Retry; contact support if persistent |
+| 190004 | 429 | method rate limited | Backoff and reduce QPS |
+| 190005 | 429 | app rate limited | Backoff and reduce QPS |
+| 99991663 | 401 | token expired | Call MCP `refresh_lark_token` |
+| 99991664 | 403 | permission denied | Check app scopes in Lark developer console |
+| {domain_code} | {HTTP} | {message} | {fix} |
+| {domain_code} | {HTTP} | {message} | {fix} |
+| {domain_code} | {HTTP} | {message} | {fix} |

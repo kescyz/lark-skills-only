@@ -1,0 +1,41 @@
+"""
+Utility functions for lark-{domain} skill.
+Customize timestamp format and helpers for your domain.
+"""
+
+from datetime import datetime, timezone
+
+
+# --- Timestamp Helpers ---
+# Choose ONE based on your API's timestamp format:
+
+# Calendar API uses SECONDS (10 digits)
+def datetime_to_timestamp_seconds(dt: datetime) -> str:
+    """Convert datetime to seconds string (10 digits). For Calendar API."""
+    return str(int(dt.replace(tzinfo=timezone.utc).timestamp()))
+
+# Task API uses MILLISECONDS (13 digits)
+def datetime_to_timestamp_ms(dt: datetime) -> str:
+    """Convert datetime to milliseconds string (13 digits). For Task API."""
+    return str(int(dt.replace(tzinfo=timezone.utc).timestamp() * 1000))
+
+
+# --- Common Helpers ---
+
+def get_today_range_ms():
+    """Get today's start and end as millisecond timestamps."""
+    now = datetime.now()
+    start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    end = now.replace(hour=23, minute=59, second=59, microsecond=999999)
+    return (
+        int(start.timestamp() * 1000),
+        int(end.timestamp() * 1000)
+    )
+
+
+def format_timestamp_for_display(ts_ms) -> str:
+    """Format millisecond timestamp for display: 'YYYY-MM-DD HH:MM'."""
+    if not ts_ms or ts_ms == "0":
+        return "N/A"
+    ts = int(ts_ms) / 1000
+    return datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M")

@@ -1,0 +1,100 @@
+# Lark {Domain} API Reference
+
+> Token management handled by `lark-token-manager` MCP server.
+> See [api-examples.md](./api-examples.md) for code samples.
+> See [api-validation.md](./api-validation.md) for full enums, schemas, error codes.
+
+## Lark{Domain}Client
+
+```python
+from lark_api import Lark{Domain}Client
+client = Lark{Domain}Client(access_token="u-xxx", user_open_id="ou_xxx")
+```
+
+## Contents
+
+- [{Resource1}](#{resource1-anchor})
+- [{Resource2}](#{resource2-anchor})
+- [Error Codes](#error-codes)
+
+---
+
+## {Resource1}
+
+### {method_name}({param1}, {param2})
+
+{2-3 sentence description explaining what the method does, when to use it, and any important behavior (e.g. auto-retry, pagination, side effects).}
+
+**Params**:
+| Field | Type | Required | Description | Constraints |
+|-------|------|----------|-------------|-------------|
+| {param1} | string | **Yes** | {description} | {e.g. max 1000 chars, format requirements} |
+| {param2} | {type} | No | {description} | {constraints or "—"} |
+| {nested_obj} | {schema} | No | {description} | See {schema} below |
+
+**Returns**: `{return type}` — {brief description of returned data}
+**Errors**: {code} ({meaning}), {code} ({meaning})
+
+---
+
+### {method_name_2}({params})
+
+{2-3 sentence description.}
+
+**Params**:
+| Field | Type | Required | Description | Constraints |
+|-------|------|----------|-------------|-------------|
+| {field} | {type} | **Yes** | {description} | {constraints} |
+
+**Returns**: `{return type}` — {description}
+**Errors**: {code} ({meaning})
+
+---
+
+## {Resource2}
+
+### {method_name}({params})
+
+{2-3 sentence description.}
+
+**Params**:
+| Field | Type | Required | Description | Constraints |
+|-------|------|----------|-------------|-------------|
+| {field} | {type} | **Yes** | {description} | {constraints} |
+
+**Returns**: `{return type}` — {description}
+**Errors**: {code} ({meaning})
+
+---
+
+## Utilities
+
+| Function | Input | Output | Note |
+|----------|-------|--------|------|
+| `{utility_1}(arg)` | {type} | {type} | {brief description} |
+| `{utility_2}()` | — | {type} | {brief description} |
+
+---
+
+## {Resource1} Object (returned by all methods)
+
+```python
+{
+    "{field_1}": "{example_value}",
+    "{field_2}": "{example_value}",
+    "{field_3}": "{example_value}"   # {comment about values}
+}
+```
+
+---
+
+## Error Codes
+
+| Code | Meaning | Action |
+|------|---------|--------|
+| 0 | Success | Continue |
+| 99991663 | Token expired | Refresh via MCP `refresh_lark_token` |
+| 99991664 | Permission denied | Check app scopes |
+| 1254290 | Rate limited | Backoff (2s, 4s, 8s) |
+| {domain_code} | {meaning} | {recommended action} |
+| {domain_code} | {meaning} | {recommended action} |

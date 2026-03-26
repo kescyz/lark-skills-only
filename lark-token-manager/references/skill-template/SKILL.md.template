@@ -1,0 +1,93 @@
+---
+name: lark-{domain}
+description: "LarkSuite {domain} management - {resource list}. Use when user asks about {triggers}. Requires lark-token-manager MCP."
+---
+
+# Lark {Domain}
+
+Manage LarkSuite {resources} through Lark APIs.
+
+## Prerequisites
+
+- `lark-token-manager` MCP server configured in `.mcp.json`
+- Lark app with `{scope_list}` scopes
+
+## Initialization
+
+### Step 1: Get user info from MCP
+
+Call MCP `whoami` to get:
+- `linked_users[].lark_open_id` -> user_open_id
+- `linked_users[].lark_user_id` -> user_id (if needed for attendees/members)
+
+### Step 2: Get access token from MCP
+
+Call MCP `get_lark_token(app_name=LARK_APP_NAME)`
+- If expired: MCP `refresh_lark_token` -> if fails: MCP `start_oauth`
+
+### Step 3: Initialize client
+
+```python
+import subprocess
+subprocess.run(["cp", "-r", "/mnt/skills/user/lark-{domain}/scripts/", "/home/claude/"])
+
+import sys
+sys.path.insert(0, '/home/claude/scripts')
+
+from lark_api import Lark{Domain}Client
+from utils import {utility_imports}
+
+client = Lark{Domain}Client(
+    access_token=TOKEN_FROM_MCP,
+    user_open_id=OPEN_ID_FROM_WHOAMI
+)
+```
+
+## API Methods
+
+| Method | Description |
+|--------|-------------|
+| `{method_1}` | {2-3 sentence description with key param hints. Note required vs optional fields. See api-reference.md for all fields.} |
+| `{method_2}` | {2-3 sentence description with key param hints. Note required vs optional fields. See api-reference.md for all fields.} |
+
+## Timestamp Rules
+
+> **{Domain} API** uses **{SECONDS or MILLISECONDS}** ({digit_count} digits): `"{example}"`
+
+- `{timestamp_helper}(dt)` -> {unit} string
+
+## Quick Examples
+
+### {Example 1 title}
+```python
+# {brief description}
+{code}
+```
+
+### {Example 2 title}
+```python
+# {brief description}
+{code}
+```
+
+## Personnel Lookup
+
+Use MCP `search_users` tool directly -- no Python needed:
+```
+MCP search_users(query="Name") -> [{name, email, department, lark_open_id, ...}]
+```
+
+## Error Handling
+
+| Code | Meaning | Action |
+|------|---------|--------|
+| 0 | Success | Continue |
+| 99991663 | Token expired | `refresh_lark_token` via MCP |
+| 1254290 | Rate limited | Backoff (2s, 4s, 8s) |
+| 99991664 | Permission denied | Check app scopes |
+
+## References
+
+- [API Reference](./references/api-reference.md) — all methods with params (required/optional, types, constraints)
+- [Examples](./references/api-examples.md) — realistic code samples per operation
+- [Validation](./references/api-validation.md) — field constraints, nested schemas, error codes, rate limits

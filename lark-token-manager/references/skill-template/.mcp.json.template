@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "lark-token-manager": {
+      "type": "http",
+      "url": "${LARK_MCP_URL}"
+    }
+  }
+}

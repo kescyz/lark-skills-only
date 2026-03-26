@@ -1,0 +1,7 @@
+[
+  {"query": "Create a new document titled 'Meeting Notes'", "expected_skill": "lark-docs"},
+  {"query": "Add a heading 'Action Items' to the document", "expected_skill": "lark-docs"},
+  {"query": "Show me the content of the document", "expected_skill": "lark-docs"},
+  {"query": "Upload a file to my drive", "expected_skill": "lark-drive"},
+  {"query": "Create a wiki page about onboarding", "expected_skill": "lark-wiki"}
+]
